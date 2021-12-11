@@ -2,20 +2,15 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
-	"log"
 	"strconv"
-	"strings"
+
+	"github.com/slichlyter12/aoc-21/common"
 )
 
 func main() {
 	increases := 0
-	input, err := ioutil.ReadFile("input.txt")
-	if err != nil {
-		log.Fatalf("unable to read file: %v", err)
-	}
+	depths := common.GetFileInputs("1-sonar-sweep/input.txt")
 
-	depths := strings.Split(string(input), "\n")
 	var lastDepth int
 	for index, depthStr := range depths {
 		depth, _ := strconv.Atoi(depthStr)
