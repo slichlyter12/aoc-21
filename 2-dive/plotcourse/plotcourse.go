@@ -11,7 +11,8 @@ type Instruction struct {
 	Magnitude int
 }
 
-func Plotcourse(instructions []Instruction) (hPos int, depth int) {
+// Plot a course given a set of instructions
+func PlotCourse(instructions []Instruction) (hPos int, depth int) {
 	hPos = 0
 	depth = 0
 

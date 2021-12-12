@@ -13,7 +13,7 @@ func main() {
 	for _, direction := range directions {
 		instructions = append(instructions, plotcourse.GetInstruction(direction))
 	}
-	hPos, depth := plotcourse.Plotcourse(instructions)
+	hPos, depth := plotcourse.PlotCourse(instructions)
 	fmt.Printf("Horizontal Position: %v\nDepth: %v\n", hPos, depth)
 	fmt.Printf("Position: %v\n", hPos*depth)
 }
