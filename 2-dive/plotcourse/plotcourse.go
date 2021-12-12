@@ -11,7 +11,8 @@ type Instruction struct {
 	Magnitude int
 }
 
-// Plot a course given a set of instructions
+// PlotCourse calculates a horizontal position and depth given
+// a set of instructions
 func PlotCourse(instructions []Instruction) (hPos int, depth int) {
 	hPos = 0
 	depth = 0
@@ -30,6 +31,8 @@ func PlotCourse(instructions []Instruction) (hPos int, depth int) {
 	return hPos, depth
 }
 
+// PlotCourseWithAim calculates horizontal position and depth given
+// a set of instructions but uses aim to get there
 func PlotCourseWithAim(instructions []Instruction) (hPos int, depth int, aim int) {
 	hPos = 0
 	depth = 0
