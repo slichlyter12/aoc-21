@@ -8,24 +8,34 @@ import (
 	"strings"
 )
 
-// GetFileInputs reads a file and returns the content in a slice
-func GetFileInputs(file string) []int {
+// GetFileInts reads a file and returns the content in an int slice
+func GetFileInts(file string) []int {
+	input := GetFileStrs(file)
+
+	var nums []int
+	for _, value := range input {
+		nums = append(nums, Atoi(value))
+	}
+
+	return nums
+}
+
+// GetFileStrs reads a file and returns a string slice of the contents
+func GetFileStrs(file string) []string {
 	text, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Fatalf("Could not read file: %v", err)
 	}
 
 	input := strings.Split(string(text), "\n")
-
-	var nums []int
-	for _, value := range input {
-		nums = append(nums, atoi(value))
+	if input[len(input)-1] == "" {
+		input = input[:len(input)-1]
 	}
 
-	return nums
+	return input
 }
 
-func atoi(str string) int {
+func Atoi(str string) int {
 	value, err := strconv.Atoi(str)
 	if err != nil {
 		fmt.Printf("Could not convert string to int: %v", err)

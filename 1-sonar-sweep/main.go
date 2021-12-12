@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	depths := common.GetFileInputs("1-sonar-sweep/input.txt")
+	depths := common.GetFileInts("1-sonar-sweep/input.txt")
 	standardDepths := sonarsweep.StandardIncreases(depths)
 	slidingWindowDepths := sonarsweep.SlidingWindowIncreases(depths)
 
