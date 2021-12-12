@@ -43,3 +43,12 @@ func Atoi(str string) int {
 
 	return value
 }
+
+func Btoi(binary string) int {
+	output, err := strconv.ParseInt(binary, 2, 64)
+	if err != nil {
+		log.Fatalf("Could not convert binary to integer: %v", err)
+	}
+
+	return int(output)
+}

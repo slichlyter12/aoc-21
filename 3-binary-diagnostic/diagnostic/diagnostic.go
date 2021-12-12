@@ -1,31 +1,12 @@
 package diagnostic
 
-import (
-	"log"
-	"strconv"
-)
-
 func GammaRate(report []string) string {
 	numBits := len(report[0])
 	var gammaRate []rune
 
 	for bitPos := 0; bitPos < numBits; bitPos++ {
-		numZeros := 0
-		numOnes := 0
-		for binIndex := 0; binIndex < len(report); binIndex++ {
-			bit := rune(report[binIndex][bitPos])
-			if bit == '0' {
-				numZeros++
-			} else {
-				numOnes++
-			}
-		}
-
-		if numZeros > numOnes {
-			gammaRate = append(gammaRate, '0')
-		} else {
-			gammaRate = append(gammaRate, '1')
-		}
+		mostCommon := commonBit(report, bitPos, '0', true)
+		gammaRate = append(gammaRate, mostCommon)
 	}
 
 	return string(gammaRate)
@@ -44,11 +25,69 @@ func EpsilonRate(gammaRate string) string {
 	return string(epsilonRate)
 }
 
-func BinaryToInt(binary string) int {
-	output, err := strconv.ParseInt(binary, 2, 64)
-	if err != nil {
-		log.Fatalf("Could not convert binary to integer: %v", err)
+func OxygenRating(report []string) string {
+	slimmedReport := report
+	bitPos := 0
+	for len(slimmedReport) != 1 {
+		mostCommonBit := commonBit(slimmedReport, bitPos, '1', true)
+		slimmedReport = keepDesiredBins(slimmedReport, bitPos, mostCommonBit)
+		bitPos++
 	}
 
-	return int(output)
+	return slimmedReport[0]
+}
+
+func CO2Rating(report []string) string {
+	slimmedReport := report
+	bitPos := 0
+
+	for len(slimmedReport) != 1 {
+		leastCommonBit := commonBit(slimmedReport, bitPos, '0', false)
+		slimmedReport = keepDesiredBins(slimmedReport, bitPos, leastCommonBit)
+		bitPos++
+	}
+
+	return slimmedReport[0]
+}
+
+func commonBit(report []string, bitIndex int, preferedBit rune, mostCommon bool) rune {
+	numZeros := 0
+	numOnes := 0
+
+	for binIndex := 0; binIndex < len(report); binIndex++ {
+		if rune(report[binIndex][bitIndex]) == '0' {
+			numZeros++
+		} else {
+			numOnes++
+		}
+	}
+
+	if numOnes == numZeros {
+		return preferedBit
+	}
+
+	if !mostCommon {
+		if numOnes < numZeros {
+			return '1'
+		}
+
+		return '0'
+	}
+
+	if numOnes > numZeros {
+		return '1'
+	}
+
+	return '0'
+}
+
+func keepDesiredBins(report []string, bitIndex int, desiredBit rune) []string {
+	var desiredBins []string
+	for binIndex := 0; binIndex < len(report); binIndex++ {
+		if rune(report[binIndex][bitIndex]) == desiredBit {
+			desiredBins = append(desiredBins, report[binIndex])
+		}
+	}
+
+	return desiredBins
 }
