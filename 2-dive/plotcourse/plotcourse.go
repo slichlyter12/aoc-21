@@ -30,6 +30,26 @@ func PlotCourse(instructions []Instruction) (hPos int, depth int) {
 	return hPos, depth
 }
 
+func PlotCourseWithAim(instructions []Instruction) (hPos int, depth int, aim int) {
+	hPos = 0
+	depth = 0
+	aim = 0
+
+	for _, instruction := range instructions {
+		switch instruction.Direction {
+		case "forward":
+			hPos += instruction.Magnitude
+			depth += aim * instruction.Magnitude
+		case "up":
+			aim -= instruction.Magnitude
+		case "down":
+			aim += instruction.Magnitude
+		}
+	}
+
+	return hPos, depth, aim
+}
+
 // GetInstruction converts a string of instructions into an Instruction object
 func GetInstruction(instructionStr string) Instruction {
 	instructionSlice := strings.Fields(instructionStr)
