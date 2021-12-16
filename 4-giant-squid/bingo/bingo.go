@@ -112,12 +112,10 @@ func Play(calls []int, boards []Board) (Board, int) {
 
 func LastToWin(calls []int, boards []Board) (Board, int) {
 	for _, call := range calls {
+		var notWon []Board
+
 		for boardIndex := 0; boardIndex < len(boards); boardIndex++ {
 			boards[boardIndex].markBoard(call)
-		}
-
-		var notWon []Board
-		for boardIndex := 0; boardIndex < len(boards); boardIndex++ {
 			if !boards[boardIndex].hasWon() {
 				notWon = append(notWon, boards[boardIndex])
 			}
