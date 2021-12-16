@@ -33,12 +33,20 @@ func main() {
 
 	// Play and print winner
 	winningBoard, winningCall := bingo.Play(calls, boards)
-	fmt.Println("Winning Board:")
-	for _, row := range winningBoard.Values {
-		fmt.Println(row)
-	}
-	fmt.Println("Winning Call: ", winningCall)
-
 	score := bingo.Score(winningBoard, winningCall)
-	fmt.Println("Winning Score: ", score)
+
+	fmt.Println("Winning Board:")
+	winningBoard.Print()
+	fmt.Println("Winning Call:", winningCall)
+	fmt.Println("Winning Score:", score)
+
+	fmt.Println("-----------")
+
+	lastToWinBoard, lastToWinCall := bingo.LastToWin(calls, boards)
+	lastToWinScore := bingo.Score(lastToWinBoard, lastToWinCall)
+
+	fmt.Println("Last to win board:")
+	lastToWinBoard.Print()
+	fmt.Println("Last to win call:", lastToWinCall)
+	fmt.Println("Last to win score:", lastToWinScore)
 }

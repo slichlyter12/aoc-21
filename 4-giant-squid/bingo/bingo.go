@@ -1,6 +1,7 @@
 package bingo
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/slichlyter12/aoc-21/common"
@@ -109,6 +110,27 @@ func Play(calls []int, boards []Board) (Board, int) {
 	return Board{}, -1
 }
 
+func LastToWin(calls []int, boards []Board) (Board, int) {
+	for _, call := range calls {
+		for boardIndex := 0; boardIndex < len(boards); boardIndex++ {
+			boards[boardIndex].markBoard(call)
+		}
+
+		var notWon []Board
+		for boardIndex := 0; boardIndex < len(boards); boardIndex++ {
+			if !boards[boardIndex].hasWon() {
+				notWon = append(notWon, boards[boardIndex])
+			}
+		}
+
+		if len(notWon) == 1 {
+			return Play(calls, []Board{notWon[0]})
+		}
+	}
+
+	return Board{}, -1
+}
+
 func Score(board Board, winningCall int) int {
 	sum := 0
 	for rowIndex := 0; rowIndex < len(board.Values); rowIndex++ {
@@ -120,4 +142,10 @@ func Score(board Board, winningCall int) int {
 	}
 
 	return sum * winningCall
+}
+
+func (board Board) Print() {
+	for _, row := range board.Values {
+		fmt.Println(row)
+	}
 }
