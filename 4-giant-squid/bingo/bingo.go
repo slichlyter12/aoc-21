@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/slichlyter12/aoc-21/color"
 	"github.com/slichlyter12/aoc-21/common"
 )
 
@@ -143,7 +144,14 @@ func Score(board Board, winningCall int) int {
 }
 
 func (board Board) Print() {
-	for _, row := range board.Values {
-		fmt.Println(row)
+	for rowIndex := range board.Values {
+		for columnIndex, value := range board.Values[rowIndex] {
+			if board.Seen[rowIndex][columnIndex] {
+				fmt.Printf(color.Green+"%5v"+color.Reset, value)
+			} else {
+				fmt.Printf("%5v", value)
+			}
+		}
+		fmt.Printf("\n")
 	}
 }
